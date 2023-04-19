@@ -38,15 +38,6 @@ class ApnajobsSpider(scrapy.Spider):
         englishlevel = ""
         gender = ""
         address = ""
-        job_details = response.xpath("//div[@class='styles__JobDetailBlockContainer-sc-1532ppx-4 fqUGaU']").getall()
-        print(len(job_details),"***********************")
-        for detail in job_details: 
-            k = Selector(text=detail)
-            print(detail)
-            label = k.xpath("//div[@class='styles__JobDetailBlockHeading-sc-1532ppx-2 iGzafA']/text()").get().strip()
-            value =  k.xpath("//div[@class='styles__JobDetailBlockValue-sc-1532ppx-3 jtaqAv']/text()").get().strip()
-            print(label,">>>>>>>>><<<<<<<<<<<<",value)
-              
         job_dict = {
             'title': title,
             'company': company,
@@ -59,5 +50,15 @@ class ApnajobsSpider(scrapy.Spider):
             'gender':gender,
             'address':address
         }
+        job_details = response.xpath("//div[@class='styles__JobDetailBlockContainer-sc-1532ppx-4 fqUGaU']").getall()
+        print(len(job_details),"***********************")
+        for detail in job_details: 
+            k = Selector(text=detail)
+            print(detail)
+            label = k.xpath("//div[@class='styles__JobDetailBlockHeading-sc-1532ppx-2 iGzafA']/text()").get().strip()
+            value =  k.xpath("//div[@class='styles__JobDetailBlockValue-sc-1532ppx-3 jtaqAv']/text()").get().strip()
+            print(label,">>>>>>>>><<<<<<<<<<<<",value)
+            job_dict[label]=value   
+      
         print(job_dict , "::::::::::::::::::::::::")
         yield job_dict
